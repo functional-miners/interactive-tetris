@@ -1,3 +1,19 @@
-<div>
-  Tetris!
-</div>
+<h1>Tetris!</h1>
+
+<aside class="menu">
+  <section class="board-information">
+    <h3>Room: <em>#<span id="room-name">none</span></em></h3>
+    <h5>Points: <span id="points">0</span></h5>
+    <h5>Connected clients: <span id="connected-clients-count">0</span></h5>
+  </section>
+  <section>
+    <canvas id="preview" width="100" height="100"></canvas>
+  </section>
+</aside>
+
+<section class="playground">
+  <canvas id="game" width="500" height="700"></canvas>
+</section>
+
+<aside class="history">
+</aside>

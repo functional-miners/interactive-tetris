@@ -1,48 +1,45 @@
-body, form, ul, table {
+body {
   margin-top: 20px;
   margin-bottom: 20px;
+
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.alert:empty { display: none; }
-
-form.link, form.button {
-  display: inline;
-}
-
-.header,
-.marketing {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-.jumbotron {
+h1 {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
 }
 
-.marketing {
-  margin: 35px 0;
+h3 {
+  margin: 0 0 10px 0;
 }
 
-@media screen and (min-width: 768px) {
-  .header,
-  .marketing {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  .header {
-    margin-bottom: 30px;
-  }
-  .jumbotron {
-    border-bottom: 0;
-  }
+h5 {
+  margin: 0;
+}
+
+.playground {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.menu {
+  margin: 0 auto;
+  width: 504px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu .points  {
+  align-self: center;
+}
+
+.history {
+  margin: 0 auto;
+  width: 500px;
+
+  text-align: justify;
+
+  height: 50px;
+  overflow: hidden;
 }
