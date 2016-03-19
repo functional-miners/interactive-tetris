@@ -17,5 +17,8 @@ defmodule InteractiveTetris.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    resources "/users", UserController
+    resources "/rooms", RoomController
   end
 end
