@@ -9,5 +9,6 @@ defmodule InteractiveTetris.Repo.Migrations.CreateUser do
       timestamps
     end
 
+    create unique_index(:users, [:username])
   end
 end

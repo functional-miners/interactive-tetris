@@ -8,7 +8,7 @@ defmodule InteractiveTetris.Room do
     field :name, :string
     field :score, :integer, default: 0
     field :active, :boolean, default: false
-    belongs_to :author, InteractiveTetris.Author
+    belongs_to :author, InteractiveTetris.User
 
     timestamps
   end
@@ -25,5 +25,6 @@ defmodule InteractiveTetris.Room do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> unique_constraint(:name)
   end
 end

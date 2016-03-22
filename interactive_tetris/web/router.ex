@@ -16,9 +16,19 @@ defmodule InteractiveTetris.Router do
   scope "/", InteractiveTetris do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", UserController, :register
+    post "/", UserController, :enter
+    post "/exit", UserController, :exit
 
-    resources "/users", UserController
-    resources "/rooms", RoomController
+    get "/rooms", RoomController, :index
+
+    get "/rooms/new", RoomController, :new
+    post "/rooms", RoomController, :create
+    delete "/rooms/:id", RoomController, :delete
+
+    get "/rooms/:id/join", RoomController, :join
+
+    get "/rooms/:id/game", GameController, :game
+    get "/rooms/:id/summary", GameController, :summary
   end
 end

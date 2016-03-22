@@ -11,7 +11,8 @@ defmodule InteractiveTetris.Repo.Migrations.CreateRoom do
 
       timestamps
     end
-    create index(:rooms, [:author_id])
 
+    create index(:rooms, [:author_id])
+    create unique_index(:rooms, [:name])
   end
 end

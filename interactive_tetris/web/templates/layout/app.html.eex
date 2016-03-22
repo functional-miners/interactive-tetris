@@ -17,6 +17,8 @@
 
   <body>
     <main class="container">
+      <h1>Tetris!</h1>
+
       <%= render @view_module, @view_template, assigns %>
     </main>
 

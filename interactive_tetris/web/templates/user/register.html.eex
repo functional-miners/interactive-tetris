@@ -1,7 +1,7 @@
 <section class="centered">
-  <h2>New room</h2>
+  <h2>Who are you?</h2>
 
-  <%= form_for @changeset, room_path(@conn, :create), fn field -> %>
+  <%= form_for @changeset, user_path(@conn, :enter), fn field -> %>
     <%= if @changeset.action do %>
       <div class="alert alert-danger">
         <p>Oops, something went wrong! Please check the errors below.</p>
@@ -9,9 +9,9 @@
     <% end %>
 
     <div class="form-group">
-      <%= label field, :name, class: "control-label" %>
-      <%= text_input field, :name, placeholder: "Put room name here..." %>
-      <%= error_tag field, :name %>
+      <%= label field, :username, class: "control-label" %>
+      <%= text_input field, :username, placeholder: "Put your nick here..." %>
+      <%= error_tag field, :username %>
     </div>
     <div class="form-group">
       <%= submit "Submit", class: "btn-main" %>

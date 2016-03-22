@@ -9,6 +9,10 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+}
+
 h3 {
   margin: 0 0 10px 0;
 }
@@ -17,6 +21,38 @@ h5 {
   margin: 0;
 }
 
+.alert {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.alert-danger {
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: #FF6961;
+}
+
+.form-group {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.form-group .control-label:after {
+  content: ":";
+}
+
+.form-group .help-block {
+  font-style: italic;
+  color: #FF6961;
+}
+
+.form-group .btn-main {
+  width: 120px;
+}
+
+.centered,
 .playground {
   margin: 0 auto;
   width: 500px;
@@ -42,4 +78,29 @@ h5 {
 
   height: 50px;
   overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table td {
+  text-align: center;
+}
+
+table tr td.inlined * {
+  display: inline-block;
+}
+
+.table th {
+  background-color: #EAEAEA;
+}
+
+.table tr.active-row {
+  background-color: #BDECB6;
+}
+
+.table tr.inactive-row {
+  background-color: #FF6961;
 }
