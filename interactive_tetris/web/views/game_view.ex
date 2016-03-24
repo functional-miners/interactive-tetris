@@ -1,3 +1,3 @@
-defmodule InteractiveTetris.PageView do
+defmodule InteractiveTetris.GameView do
   use InteractiveTetris.Web, :view
 end

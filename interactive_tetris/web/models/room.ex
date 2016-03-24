@@ -8,12 +8,13 @@ defmodule InteractiveTetris.Room do
     field :name, :string
     field :score, :integer, default: 0
     field :active, :boolean, default: false
+    field :finished, :boolean, default: false
     belongs_to :author, InteractiveTetris.User
 
     timestamps
   end
 
-  @required_fields ~w(name score active)
+  @required_fields ~w(name score active finished)
   @optional_fields ~w()
 
   @doc """

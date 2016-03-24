@@ -13,15 +13,10 @@
     </li>
 
     <li>
-      <strong>Active:</strong>
-      <%= @room.active %>
-    </li>
-
-    <li>
       <strong>Author:</strong>
       <%= @room.author.username %>
     </li>
   </ul>
 
-  <%= link "Back", to: room_path(@conn, :index) %>
+  <%= link "Back", to: room_path(@conn, :index) %>, <%= link "Join", to: game_path(@conn, :game, @room.id) %>
 </section>

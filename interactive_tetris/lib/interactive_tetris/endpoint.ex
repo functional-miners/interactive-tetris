@@ -1,7 +1,7 @@
 defmodule InteractiveTetris.Endpoint do
   use Phoenix.Endpoint, otp_app: :interactive_tetris
 
-  socket "/socket", InteractiveTetris.UserSocket
+  # socket "/socket", InteractiveTetris.UserSocket
 
   plug Plug.Static,
     at: "/", from: :interactive_tetris, gzip: false,

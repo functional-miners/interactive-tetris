@@ -7,6 +7,7 @@ defmodule InteractiveTetris.Repo.Migrations.CreateRoom do
       add :name, :string
       add :score, :integer, default: 0
       add :active, :boolean, default: false
+      add :finished, :boolean, default: false
       add :author_id, references(:users, on_delete: :nothing, type: :binary_id)
 
       timestamps

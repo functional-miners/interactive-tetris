@@ -17,8 +17,10 @@
         <td><%= room.score %></td>
         <td><%= room.author.username %></td>
         <td class="inlined">
-          <%= link "Delete", to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure?"] %> |
-          <%= link "Join", to: room_path(@conn, :join, room) %>
+          <%= link "Delete", to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= if !room.finished do %>
+            | <%= link "Join", to: room_path(@conn, :join, room) %>
+          <%= end %>
         </td>
       </tr>
   <% end %>

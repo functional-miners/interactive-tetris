@@ -1,0 +1,22 @@
+<section class="centered">
+  <h2>Game finished!</h2>
+
+  <ul>
+    <li>
+      <strong>Name:</strong>
+      <%= @room.name %>
+    </li>
+
+    <li>
+      <strong>Score:</strong>
+      <%= @room.score %>
+    </li>
+
+    <li>
+      <strong>Author:</strong>
+      <%= @room.author.username %>
+    </li>
+  </ul>
+
+  <%= link "Back", to: room_path(@conn, :index) %>
+</section>

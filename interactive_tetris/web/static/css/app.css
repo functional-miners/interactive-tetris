@@ -28,9 +28,13 @@ h5 {
 }
 
 .alert-danger {
-  border: 1px solid red;
   border-radius: 5px;
   background-color: #FF6961;
+}
+
+.alert-info {
+  border-radius: 5px;
+  background-color: #BDECB6;
 }
 
 .form-group {
@@ -99,6 +103,10 @@ table tr td.inlined * {
 
 .table tr.active-row {
   background-color: #BDECB6;
+}
+
+.table tr.ready-row {
+  background-color: #FDFD96;
 }
 
 .table tr.inactive-row {
