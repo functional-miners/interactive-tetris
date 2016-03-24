@@ -3,12 +3,12 @@ defmodule InteractiveTetris.UserController do
 
   alias InteractiveTetris.User
 
-  plug :scrub_params, "user" when action in [:enter, :exit]
+  plug :scrub_params, "user" when action in [:enter]
 
-  def register(conn, _params) do
-    changeset = User.changeset(%User{})
-    render(conn, "register.html", changeset: changeset)
-  end
+  defp register_decision(conn, nil), do: render(conn, "register.html", changeset: User.changeset(%User{}))
+  defp register_decision(conn, _), do: redirect(conn, to: room_path(conn, :index))
+
+  def register(conn, _params), do: register_decision(conn, get_session(conn, :username))
 
   def enter(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
@@ -25,7 +25,8 @@ defmodule InteractiveTetris.UserController do
     end
   end
 
-  def exit(conn, _params) do
-    user_path(conn, :register)
+  def exit(conn, params) do
+    Plug.Conn.configure_session(conn, drop: true)
+    |> register(params)
   end
 end

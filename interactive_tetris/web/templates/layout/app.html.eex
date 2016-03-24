@@ -25,6 +25,12 @@
       </section>
 
       <%= render @view_module, @view_template, assigns %>
+
+      <section class="centered">
+        <%= if logged(@conn) do %>
+          <%= link "Log out", to: user_path(@conn, :exit) %>
+        <%= end %>
+      </section>
     </main>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
