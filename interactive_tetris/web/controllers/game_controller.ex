@@ -35,7 +35,7 @@ defmodule InteractiveTetris.GameController do
 
   def summary(conn, %{"id" => id}) do
     room = Repo.get(Room, id)
-    room = Repo.preload(room, :author)
+    room = Repo.preload(room, [:author, :connected_users])
     changeset = Ecto.Changeset.change(room, active: false, finished: true)
 
     case Repo.update(changeset) do

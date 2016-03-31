@@ -10,6 +10,7 @@ defmodule InteractiveTetris.Room do
     field :active, :boolean, default: false
     field :finished, :boolean, default: false
     belongs_to :author, InteractiveTetris.User
+    has_many :connected_users, InteractiveTetris.ConnectedGame
 
     timestamps
   end

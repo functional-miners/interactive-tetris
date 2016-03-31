@@ -16,6 +16,11 @@
       <strong>Author:</strong>
       <%= @room.author.username %>
     </li>
+
+    <li>
+      <strong>Connected users:</strong>
+      <%= length(@room.connected_users) %>
+    </li>
   </ul>
 
   <%= link "Back", to: room_path(@conn, :index) %>, <%= link "Join", to: game_path(@conn, :game, @room.id) %>

@@ -9,7 +9,7 @@ defmodule InteractiveTetris.ConnectedGame do
     belongs_to :user, InteractiveTetris.User
   end
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, _params \\ :empty) do
     model
   end
 end

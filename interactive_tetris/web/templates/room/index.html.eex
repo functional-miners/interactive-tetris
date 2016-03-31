@@ -7,6 +7,7 @@
         <th>Name</th>
         <th>Score</th>
         <th>Author</th>
+        <th>Connected users</th>
         <th></th>
       </tr>
     </thead>
@@ -16,10 +17,15 @@
         <td><%= room.name %></td>
         <td><%= room.score %></td>
         <td><%= room.author.username %></td>
+        <td><%= length(room.connected_users) %></td>
         <td class="inlined">
-          <%= link "Delete", to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= if is_current_user_an_author(@conn, room) do %>
+            <%= link "Delete", to: room_path(@conn, :delete, room),
+                               method: :delete,
+                               data: [confirm: "Are you sure?"] %>
+          <%= end %>
           <%= if !room.finished do %>
-            | <%= link "Join", to: room_path(@conn, :join, room) %>
+            <%= link "Join", to: room_path(@conn, :join, room) %>
           <%= end %>
         </td>
       </tr>

@@ -8,7 +8,7 @@ defmodule InteractiveTetris.RoomController do
 
   def index(conn, _params) do
     rooms = Repo.all(Room)
-    rooms = Repo.preload(rooms, :author)
+    rooms = Repo.preload(rooms, [:author, :connected_users])
 
     render(conn, "index.html", rooms: rooms)
   end
@@ -47,7 +47,7 @@ defmodule InteractiveTetris.RoomController do
 
   def join(conn, %{"id" => id}) do
     room = Repo.get(Room, id)
-    room = Repo.preload(room, :author)
+    room = Repo.preload(room, [:author, :connected_users])
 
     render(conn, "join.html", room: room)
   end

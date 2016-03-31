@@ -93,8 +93,13 @@ h5 {
   text-align: center;
 }
 
-table tr td.inlined * {
+table tr td.inlined {
+  text-align: right;
+}
+
+table tr td.inlined > * {
   display: inline-block;
+  margin-right: 20px;
 }
 
 .table th {
