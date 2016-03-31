@@ -6,7 +6,8 @@ defmodule InteractiveTetris do
 
     children = [
       supervisor(InteractiveTetris.Endpoint, []),
-      supervisor(InteractiveTetris.Repo, [])
+      supervisor(InteractiveTetris.Repo, []),
+      supervisor(InteractiveTetris.GamesSupervisor, [])
     ]
 
     opts = [strategy: :one_for_one, name: InteractiveTetris.Supervisor]
