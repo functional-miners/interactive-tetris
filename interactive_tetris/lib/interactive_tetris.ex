@@ -7,7 +7,8 @@ defmodule InteractiveTetris do
     children = [
       supervisor(InteractiveTetris.Endpoint, []),
       supervisor(InteractiveTetris.Repo, []),
-      supervisor(InteractiveTetris.GamesSupervisor, [])
+      supervisor(InteractiveTetris.GameSupervisor, []),
+      supervisor(InteractiveTetris.StatePusherSupervisor, [])
     ]
 
     opts = [strategy: :one_for_one, name: InteractiveTetris.Supervisor]
@@ -17,5 +18,10 @@ defmodule InteractiveTetris do
   def config_change(changed, _new, removed) do
     InteractiveTetris.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def start_game(room_id, socket) do
+    game = InteractiveTetris.GameSupervisor.start_game(room_id)
+    InteractiveTetris.StatePusherSupervisor.start_pusher(socket, game)
   end
 end

@@ -6,8 +6,8 @@ defmodule InteractiveTetris.Rotator do
   def rotate(piece, 90) do
     rotated_width = count(piece)
     rotated_height = count(hd(piece))
-    for col <- (0..rotated_height-1), into: [] do
-      for row <- (rotated_width-1..0), into: [] do
+    for col <- (0 .. rotated_height - 1), into: [] do
+      for row <- (rotated_width - 1 .. 0), into: [] do
         piece |> at(row) |> at(col)
       end
     end

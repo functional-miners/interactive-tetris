@@ -13,16 +13,25 @@ defmodule InteractiveTetris.GameController do
       {:ok, _model} ->
         username = get_session(conn, :username)
         user = Repo.get_by(User, username: username)
-        changeset = ConnectedGame.changeset(%ConnectedGame{ :user_id => user.id, :room_id => id })
 
-        case Repo.insert(changeset) do
-          {:ok, _model} ->
-            conn
-            |> put_flash(:info, "Game activated!")
-            |> render("game.html", room: room)
+        case Repo.get_by(ConnectedGame, user_id: user.id, room_id: id) do
+          nil ->
+            changeset = ConnectedGame.changeset(%ConnectedGame{ :user_id => user.id, :room_id => id })
 
-          {:error, _changeset} ->
+            case Repo.insert(changeset) do
+              {:ok, _model} ->
+                conn
+                |> put_flash(:info, "Game activated!")
+                |> render("game.html", room: room)
+
+              {:error, _changeset} ->
+                conn
+                |> render("game.html", room: room)
+            end
+
+          _ ->
             conn
+            |> put_flash(:info, "Game already active!")
             |> render("game.html", room: room)
         end
 

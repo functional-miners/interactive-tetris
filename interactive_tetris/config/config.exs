@@ -5,6 +5,7 @@ config :interactive_tetris, InteractiveTetris.Endpoint,
   root: Path.dirname(__DIR__),
   secret_key_base: "qQPRPUgAyAqhciMDBeFSDKaPCnyW3ez+Izquo9VvO8CXVhMmuPW/03UnKVjBgXbl",
   render_errors: [accepts: ~w(html json)],
+  http: [acceptors: 2],
   pubsub: [name: InteractiveTetris.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

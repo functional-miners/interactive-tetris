@@ -67,15 +67,13 @@ function drawNext(context, next) {
   drawNextPiece(context, next);
 }
 
-function drawBoard(context, board, piece) {
-  let center = commons.centerFor(commons.getNumberFrom(piece));
-
+function drawBoard(context, board) {
   drawFrame(context, board);
-  drawPixelArray(context, piece, 8 + center.x, 0);
+  drawPixelArray(context, board, 1, 0);
 }
 
 function draw(mainContext, previewContext, state) {
-  drawBoard(mainContext, state.board, state.current);
+  drawBoard(mainContext, state.board);
   drawNext(previewContext, state.next);
 }
 

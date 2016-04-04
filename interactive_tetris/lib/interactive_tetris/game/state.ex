@@ -1,7 +1,7 @@
 defmodule InteractiveTetris.Game.State do
   defmodule Helpers do
     def empty_line do
-      1..10
+      1 .. 18
       |> Enum.map(fn(_) -> 0 end)
     end
   end
@@ -27,7 +27,7 @@ defmodule InteractiveTetris.Game.State do
   end
 
   def clear_lines(state) do
-    %__MODULE__{state|board: clear_lines(state.board, [], [])}
+    %__MODULE__{state | board: clear_lines(state.board, [], [])}
   end
   defp clear_lines([line|rest], accum, cleared) do
     case clearable?(line) do

@@ -10,7 +10,7 @@
 </aside>
 
 <section class="playground">
-  <canvas id="game" width="500" height="700"></canvas>
+  <canvas id="game" width="500" height="600"></canvas>
 </section>
 
 <aside class="history">

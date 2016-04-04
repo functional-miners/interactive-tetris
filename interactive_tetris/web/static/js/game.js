@@ -1,11 +1,8 @@
 import draw from "./drawing";
+import onTick from "./communication";
 
-let state = {
+let initialState = {
   board: [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -31,22 +28,19 @@ let state = {
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   ],
 
-  current: [
-    [5, 5, 5, 5]
-  ],
-
-  next: [
-    [6, 6],
-    [6, 6]
-  ]
+  current: [],
+  next: []
 };
 
 let game = document.getElementById("game");
 let preview = document.getElementById("preview");
 
 let contexts = {
-  game: game.getContext("2d"),
-  preview: preview.getContext("2d")
+  game: game && game.getContext("2d"),
+  preview: preview && preview.getContext("2d")
 };
 
-draw(contexts.game, contexts.preview, state);
+if (contexts.game && contexts.preview) {
+  draw(contexts.game, contexts.preview, initialState);
+  onTick((state) => { draw(contexts.game, contexts.preview, state); });
+}

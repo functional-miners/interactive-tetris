@@ -22,7 +22,7 @@ defmodule InteractiveTetris.Game.Interaction do
   def do_handle_input(state, _), do: state
 
   def valid?(%State{x: x}) when x < 0, do: false
-  def valid?(%State{}=state) do
+  def valid?(%State{} = state) do
     !past_right_side_of_board?(state) &&
     !collision_with_board?(state)
   end
@@ -35,6 +35,6 @@ defmodule InteractiveTetris.Game.Interaction do
 
   def past_right_side_of_board?(state) do
     width = Shapes.width(state.current, state.rotation)
-    state.x + width >= 11
+    state.x + width >= 19
   end
 end
