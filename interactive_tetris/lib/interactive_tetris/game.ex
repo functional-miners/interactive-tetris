@@ -13,6 +13,9 @@ defmodule InteractiveTetris.Game do
     {:ok, pid}
   end
 
+  # TODO: Ending game (closing board, stopping process, removing ETS associations, saving state of the game at the end).
+  # TODO: Adding more information to state (score, connected users etc.).
+
   def get_state(pid) do
     GenServer.call(pid, :get_state)
   end
