@@ -13,8 +13,6 @@ defmodule InteractiveTetris.StatePusher do
     {:ok, input}
   end
 
-  # TODO: Pushing also other users moves to the clients.
-
   def handle_info(:tick, {socket, game} = state) do
     Phoenix.Channel.push socket, "game:state", InteractiveTetris.Game.get_state(game)
     {:noreply, state}

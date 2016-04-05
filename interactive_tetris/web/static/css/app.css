@@ -78,10 +78,16 @@ h5 {
   margin: 0 auto;
   width: 500px;
 
-  text-align: justify;
+  text-align: center;
 
   height: 50px;
   overflow: hidden;
+}
+
+.history-element {
+  color: #888888;
+  font-style: italic;
+  font-size: 60%;
 }
 
 .table {
@@ -116,4 +122,8 @@ table tr td.inlined > * {
 
 .table tr.inactive-row {
   background-color: #FF6961;
+}
+
+.logout {
+  float: right;
 }

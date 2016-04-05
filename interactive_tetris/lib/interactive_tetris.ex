@@ -22,7 +22,7 @@ defmodule InteractiveTetris do
     :ok
   end
 
-  def start_game(room_id, socket) do
+  def start_game(room_id) do
     game = InteractiveTetris.GameSupervisor.start_game(room_id)
     :ets.insert_new(:interactive_tetris_active_games, {room_id, game})
 

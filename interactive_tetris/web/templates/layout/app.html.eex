@@ -16,6 +16,12 @@
   </head>
 
   <body>
+    <script>
+      (function () {
+        "use strict";
+        window.USERNAME = "<%= get_username(@conn) %>";
+      })();
+    </script>
     <main class="container">
       <h1>Tetris!</h1>
 
@@ -28,7 +34,8 @@
 
       <section class="centered">
         <%= if logged(@conn) do %>
-          <%= link "Log out", to: user_path(@conn, :exit) %>
+          <%= link "Rooms", to: room_path(@conn, :index) %>
+          <%= link "Log out", to: user_path(@conn, :exit), class: "logout" %>
         <%= end %>
       </section>
     </main>

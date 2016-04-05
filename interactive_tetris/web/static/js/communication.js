@@ -3,7 +3,7 @@ import {Socket} from "phoenix";
 function translateKeyToEvent(event) {
   let key = event.keyIdentifier || event.key;
 
-  switch(key){
+  switch(key) {
     case "Left":
     case "ArrowLeft":
       return "move_left";
@@ -21,11 +21,28 @@ function translateKeyToEvent(event) {
   }
 }
 
+function translateToHumanFriendlyMove(event) {
+  switch(event) {
+    case "move_left":
+      return "moved current piece to the left";
+
+    case "move_right":
+      return "moved current piece to the right";
+
+    case "rotate_cw":
+      return "rotated current piece";
+  }
+
+  return "did nothing.";
+}
+
 const ID_EXTRACTOR = /\/rooms\/([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})\/game/;
 
 let roomNameElement;
 let pointsElement;
 let connectedClientsElement;
+
+let historyContainerElement;
 
 let onTick = (handler) => {
   let parts = ID_EXTRACTOR.exec(window.location.pathname);
@@ -37,10 +54,12 @@ let onTick = (handler) => {
     pointsElement = document.querySelector("#points");
     connectedClientsElement = document.querySelector("#connected-clients-count");
 
+    historyContainerElement = document.querySelector("#history-container");
+
     let socket = new Socket("/ws");
     socket.connect();
 
-    let channel = socket.channel("tetris", { roomId: roomId });
+    let channel = socket.channel("tetris", { roomId: roomId, user: window.USERNAME });
 
     channel.on("game:state", state => {
       handler(state);
@@ -48,6 +67,18 @@ let onTick = (handler) => {
       roomNameElement.innerText = state.name;
       pointsElement.innerText = state.points;
       connectedClientsElement.innerText = state.connected_users;
+    });
+
+    channel.on("game:movement", movement => {
+      if (movement.event !== "noop") {
+        let historyElement = document.createElement("div");
+
+        historyElement.classList.add("history-element");
+        historyElement.innerText = `User '${movement.user}' ${translateToHumanFriendlyMove(movement.event)}.`;
+
+        historyContainerElement.appendChild(historyElement);
+        historyContainerElement.scrollTop = historyContainerElement.scrollHeight;
+      }
     });
 
     channel.join()
@@ -63,7 +94,7 @@ let onTick = (handler) => {
       channel.push("event", { event: translateKeyToEvent(event) });
     };
   } else {
-    console.error("Cannot connect to the channel with unknown RoomId:", window.location.pathname);
+    console.error("Cannot connect to the channel with unknown room ID:", window.location.pathname);
   }
 };
 

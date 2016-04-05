@@ -22,6 +22,4 @@
       <%= length(@room.connected_users) %>
     </li>
   </ul>
-
-  <%= link "Back", to: room_path(@conn, :index) %>
 </section>

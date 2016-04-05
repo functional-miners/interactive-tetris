@@ -12,6 +12,15 @@ defmodule InteractiveTetris.GameSupervisor do
     pid
   end
 
+  def update_game(room_id) do
+    pid = InteractiveTetris.get_game_by_room_id(room_id)
+
+    room = Repo.get(Room, room_id)
+    room = Repo.preload(room, [:connected_users])
+
+    InteractiveTetris.Game.update_room(pid, room)
+  end
+
   def start_link() do
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
