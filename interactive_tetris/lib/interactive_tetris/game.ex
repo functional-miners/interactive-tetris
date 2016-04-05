@@ -7,24 +7,27 @@ defmodule InteractiveTetris.Game do
 
   @game_tick 500
 
-  def start_link() do
-    {:ok, pid} = GenServer.start_link(__MODULE__, [])
+  def start_link(room) do
+    {:ok, pid} = GenServer.start_link(__MODULE__, room)
     :timer.send_interval(@game_tick, pid, :tick)
     {:ok, pid}
   end
 
   # TODO: Ending game (closing board, stopping process, removing ETS associations, saving state of the game at the end).
-  # TODO: Adding more information to state (score, connected users etc.).
 
   def get_state(pid) do
     GenServer.call(pid, :get_state)
+  end
+
+  def update_room(pid, room) do
+    GenServer.call(pid, {:update_room, room})
   end
 
   def handle_input(pid, input) do
     GenServer.cast(pid, {:handle_input, input})
   end
 
-  def init(_args) do
+  def init(room) do
     :random.seed(
       :erlang.phash2([ :erlang.node() ]),
       :erlang.monotonic_time(),
@@ -59,16 +62,34 @@ defmodule InteractiveTetris.Game do
         next: Shapes.random,
         current: Shapes.random,
         rotation: 0,
+        room: room,
+        points: 0,
         x: 5,
         y: 0
         }
     }
   end
 
+  def handle_call({:update_room, room}, _from, state) do
+    new_state = %State{state | room: room}
+    reply_state = %{
+      board: board_with_overlaid_shape(new_state),
+      next: Shapes.get(new_state.next, 0) |> colorize(new_state.next),
+      name: new_state.room.name,
+      points: new_state.points,
+      connected_users: length(new_state.room.connected_users),
+    }
+
+    {:reply, reply_state, new_state}
+  end
+
   def handle_call(:get_state, _from, state) do
     reply_state = %{
       board: board_with_overlaid_shape(state),
-      next: Shapes.get(state.next, 0) |> colorize(state.next)
+      next: Shapes.get(state.next, 0) |> colorize(state.next),
+      name: state.room.name,
+      points: state.points,
+      connected_users: length(state.room.connected_users),
     }
 
     {:reply, reply_state, state}

@@ -8,7 +8,7 @@ defmodule InteractiveTetris.Game.State do
 
   alias InteractiveTetris.Shapes
 
-  defstruct [:board, :next, :current, :rotation, :x, :y]
+  defstruct [:board, :next, :current, :rotation, :x, :y, :points, :room]
 
   def cells_for_shape(state) do
     shape = Shapes.shapes[state.current]
@@ -27,7 +27,8 @@ defmodule InteractiveTetris.Game.State do
   end
 
   def clear_lines(state) do
-    %__MODULE__{state | board: clear_lines(state.board, [], [])}
+    {board, points} = clear_lines(state.board, [], [])
+    %__MODULE__{state | board: board, points: state.points + points}
   end
   defp clear_lines([line|rest], accum, cleared) do
     case clearable?(line) do
@@ -37,7 +38,7 @@ defmodule InteractiveTetris.Game.State do
   end
   defp clear_lines([], accum, cleared) do
     empty_lines = for _ <- cleared, do: Helpers.empty_line
-    empty_lines ++ accum
+    {empty_lines ++ accum, length(cleared)}
   end
 
   defp clearable?(line) do

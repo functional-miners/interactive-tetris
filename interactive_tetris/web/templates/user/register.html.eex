@@ -10,7 +10,7 @@
 
     <div class="form-group">
       <%= label field, :username, class: "control-label" %>
-      <%= text_input field, :username, placeholder: "Put your nick here..." %>
+      <%= text_input field, :username, placeholder: "Put your nick here...", autofocus: true %>
       <%= error_tag field, :username %>
     </div>
     <div class="form-group">

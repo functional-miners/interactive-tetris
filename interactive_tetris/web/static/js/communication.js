@@ -21,33 +21,50 @@ function translateKeyToEvent(event) {
   }
 }
 
+const ID_EXTRACTOR = /\/rooms\/([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})\/game/;
+
+let roomNameElement;
+let pointsElement;
+let connectedClientsElement;
+
 let onTick = (handler) => {
-  // TODO: Update UI with current data.
-  // TODO: Get room_id from URL.
+  let parts = ID_EXTRACTOR.exec(window.location.pathname);
 
-  let roomId = "abcdef";
+  if (Array.isArray(parts) && parts.length > 1) {
+    let roomId = parts[1];
 
-  let socket = new Socket("/ws");
-  socket.connect();
+    roomNameElement = document.querySelector("#room-name");
+    pointsElement = document.querySelector("#points");
+    connectedClientsElement = document.querySelector("#connected-clients-count");
 
-  let channel = socket.channel("tetris", { roomId: roomId });
+    let socket = new Socket("/ws");
+    socket.connect();
 
-  channel.on("game:state", state => {
-    handler(state);
-  });
+    let channel = socket.channel("tetris", { roomId: roomId });
 
-  channel.join()
-    .receive("ok", state => {
-      console.info("Connected successfully to the channel: %s", roomId);
-    })
-    .receive("error", error => {
-      console.error("Unable to join because of error:", error);
+    channel.on("game:state", state => {
+      handler(state);
+
+      roomNameElement.innerText = state.name;
+      pointsElement.innerText = state.points;
+      connectedClientsElement.innerText = state.connected_users;
     });
 
-  window.onkeyup = function(event) {
-    event.preventDefault();
-    channel.push("event", { event: translateKeyToEvent(event) });
-  };
+    channel.join()
+      .receive("ok", state => {
+        console.info("Connected successfully to the channel: %s", roomId);
+      })
+      .receive("error", error => {
+        console.error("Unable to join because of error:", error);
+      });
+
+    window.onkeyup = function(event) {
+      event.preventDefault();
+      channel.push("event", { event: translateKeyToEvent(event) });
+    };
+  } else {
+    console.error("Cannot connect to the channel with unknown RoomId:", window.location.pathname);
+  }
 };
 
 export default onTick;

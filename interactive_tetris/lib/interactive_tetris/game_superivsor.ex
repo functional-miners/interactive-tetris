@@ -1,8 +1,14 @@
 defmodule InteractiveTetris.GameSupervisor do
   use Supervisor
 
-  def start_game(_room_id) do
-    {:ok, pid} = Supervisor.start_child(__MODULE__, [])
+  alias InteractiveTetris.Repo
+  alias InteractiveTetris.Room
+
+  def start_game(room_id) do
+    room = Repo.get(Room, room_id)
+    room = Repo.preload(room, [:connected_users])
+
+    {:ok, pid} = Supervisor.start_child(__MODULE__, [room])
     pid
   end
 
