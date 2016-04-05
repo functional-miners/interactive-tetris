@@ -26,6 +26,21 @@ defmodule InteractiveTetris.Game.State do
     |> Enum.at(x)
   end
 
+  def still_playable?(state) do
+    playable_lines(state.board, 0) < 22
+  end
+
+  defp playable_lines([line | rest], counter) do
+    case collidable?(line) do
+      true  -> playable_lines(rest, counter + 1)
+      false -> playable_lines(rest, counter)
+    end
+  end
+  defp playable_lines([], counter) do
+    IO.puts "COUNTER: #{counter}"
+    counter
+  end
+
   def clear_lines(state) do
     {board, points} = clear_lines(state.board, [], [])
     %__MODULE__{state | board: board, points: state.points + points}
@@ -39,6 +54,12 @@ defmodule InteractiveTetris.Game.State do
   defp clear_lines([], accum, cleared) do
     empty_lines = for _ <- cleared, do: Helpers.empty_line
     {empty_lines ++ accum, length(cleared)}
+  end
+
+  defp collidable?(line) do
+    IO.puts "LINE: #{inspect line}"
+    line
+    |> Enum.any?(fn(x) -> x != 0 end)
   end
 
   defp clearable?(line) do
