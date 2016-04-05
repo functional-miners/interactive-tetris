@@ -62,11 +62,19 @@ let onTick = (handler) => {
     let channel = socket.channel("tetris", { roomId: roomId, user: window.USERNAME });
 
     channel.on("game:state", state => {
-      handler(state);
+      if (state.active) {
+        handler(state);
 
-      roomNameElement.innerText = state.name;
-      pointsElement.innerText = state.points;
-      connectedClientsElement.innerText = state.connected_users;
+        roomNameElement.innerText = state.name;
+        pointsElement.innerText = state.points;
+        connectedClientsElement.innerText = state.connected_users;
+      } else {
+        channel.push("end", { roomId: roomId });
+      }
+    });
+
+    channel.on("game:end", () => {
+      window.location.pathname = window.location.pathname.replace("game", "summary");
     });
 
     channel.on("game:movement", movement => {

@@ -8,7 +8,7 @@ defmodule InteractiveTetris.Game.State do
 
   alias InteractiveTetris.Shapes
 
-  defstruct [:board, :next, :current, :rotation, :x, :y, :points, :room]
+  defstruct [:board, :next, :current, :rotation, :x, :y, :points, :room, :active]
 
   def cells_for_shape(state) do
     shape = Shapes.shapes[state.current]

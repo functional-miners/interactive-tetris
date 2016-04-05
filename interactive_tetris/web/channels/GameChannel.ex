@@ -15,6 +15,14 @@ defmodule InteractiveTetris.GameChannel do
     {:noreply, socket}
   end
 
+  def handle_in("end", %{ "roomId" => room_id }, socket) do
+    InteractiveTetris.clean_up(room_id)
+
+    Phoenix.Channel.broadcast socket, "game:end", %{}
+
+    {:noreply, socket}
+  end
+
   def handle_info(:after_join, socket) do
     game = case InteractiveTetris.get_game_by_room_id(socket.assigns.room_id) do
              nil ->
@@ -25,7 +33,7 @@ defmodule InteractiveTetris.GameChannel do
                result
            end
 
-    InteractiveTetris.start_pusher(socket, game)
+    InteractiveTetris.start_pusher(socket, socket.assigns.room_id, game)
 
     {:noreply, socket}
   end

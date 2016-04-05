@@ -13,8 +13,6 @@ defmodule InteractiveTetris.Game do
     {:ok, pid}
   end
 
-  # TODO: Ending game (closing board, stopping process, removing ETS associations, saving state of the game at the end).
-
   def get_state(pid) do
     GenServer.call(pid, :get_state)
   end
@@ -63,11 +61,16 @@ defmodule InteractiveTetris.Game do
         current: Shapes.random,
         rotation: 0,
         room: room,
+        active: true,
         points: 0,
-        x: 5,
+        x: 8,
         y: 0
         }
     }
+  end
+
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, state, state}
   end
 
   def handle_call({:update_room, room}, _from, state) do
@@ -77,6 +80,7 @@ defmodule InteractiveTetris.Game do
       next: Shapes.get(new_state.next, 0) |> colorize(new_state.next),
       name: new_state.room.name,
       points: new_state.points,
+      active: new_state.active,
       connected_users: length(new_state.room.connected_users),
     }
 
@@ -89,6 +93,7 @@ defmodule InteractiveTetris.Game do
       next: Shapes.get(state.next, 0) |> colorize(state.next),
       name: state.room.name,
       points: state.points,
+      active: state.active,
       connected_users: length(state.room.connected_users),
     }
 
@@ -120,7 +125,8 @@ defmodule InteractiveTetris.Game do
       collision_with_bottom?(state) || collision_with_board?(state) ->
         new_state = %State{state | board: board_with_overlaid_shape(state) }
         cleared_state = State.clear_lines(new_state)
-        %State{cleared_state | current: state.next, x: 5, y: 0, next: Shapes.random, rotation: 0}
+        %State{cleared_state | current: state.next, x: 8, y: 0, next: Shapes.random, rotation: 0}
+
       :else ->
         %State{state | y: state.y + 1}
     end

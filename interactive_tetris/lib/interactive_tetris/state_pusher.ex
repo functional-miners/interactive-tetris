@@ -13,6 +13,10 @@ defmodule InteractiveTetris.StatePusher do
     {:ok, input}
   end
 
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, nil, state}
+  end
+
   def handle_info(:tick, {socket, game} = state) do
     Phoenix.Channel.push socket, "game:state", InteractiveTetris.Game.get_state(game)
     {:noreply, state}
