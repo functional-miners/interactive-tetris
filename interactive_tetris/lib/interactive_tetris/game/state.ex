@@ -37,7 +37,6 @@ defmodule InteractiveTetris.Game.State do
     end
   end
   defp playable_lines([], counter) do
-    IO.puts "COUNTER: #{counter}"
     counter
   end
 
@@ -57,7 +56,6 @@ defmodule InteractiveTetris.Game.State do
   end
 
   defp collidable?(line) do
-    IO.puts "LINE: #{inspect line}"
     line
     |> Enum.any?(fn(x) -> x != 0 end)
   end
