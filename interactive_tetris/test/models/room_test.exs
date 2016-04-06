@@ -3,7 +3,7 @@ defmodule InteractiveTetris.RoomTest do
 
   alias InteractiveTetris.Room
 
-  @valid_attrs %{active: true, name: "Room 1", score: 42}
+  @valid_attrs %{active: true, name: "Room 1", score: 42, finished: false}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
