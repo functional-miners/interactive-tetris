@@ -1,6 +1,10 @@
 # Interactive Tetris
 
-Interactive Tetris application - an *Elixir* + *Phoenix* workshop, hosted April 2016 at HackerSpace Silesia (Katowice).
+Interactive Tetris application, an *Elixir* + *Phoenix* workshop (for both - beginners and *BEAM* enthusiasts).
+
+Editions:
+
+- *09.04.2016* (*HackerSpace Silesia*, Katowice).
 
 Check out our current meet-ups at [silesian-beamers.github.io](http://silesian-beamers.github.io).
 
