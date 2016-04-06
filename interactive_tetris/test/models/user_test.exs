@@ -3,7 +3,7 @@ defmodule InteractiveTetris.UserTest do
 
   alias InteractiveTetris.User
 
-  @valid_attrs %{username: "some content"}
+  @valid_attrs %{username: "jerry"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
