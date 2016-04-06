@@ -7,8 +7,7 @@ defmodule InteractiveTetris.CheckUsernameTest do
   @opts InteractiveTetris.CheckUsername.init(%{ "default" => "/default_path" })
 
   test "it should redirect to provided default path when there is no username in session data" do
-    conn = conn(:get, "/rooms") |> fetch_cookies()
-
+    conn = conn(:get, "/rooms")
     opts = Plug.Session.init(store: ProcessStore, key: "session_key")
     conn = Plug.Session.call(conn, opts) |> fetch_session()
 
@@ -23,8 +22,7 @@ defmodule InteractiveTetris.CheckUsernameTest do
   end
 
   test "it should move forward when username is available in session data" do
-    conn = conn(:get, "/rooms") |> fetch_cookies()
-
+    conn = conn(:get, "/rooms")
     opts = Plug.Session.init(store: ProcessStore, key: "session_key")
     conn = Plug.Session.call(conn, opts) |> fetch_session()
     conn = put_session(conn, "username", "jerry")
