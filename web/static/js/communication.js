@@ -80,7 +80,7 @@ let onTick = (handler) => {
     });
 
     channel.on("game:movement", movement => {
-      if (movement.event !== "noop") {
+      if (movement.event !== "noop" && movement.roomId === roomId) {
         let historyElement = document.createElement("div");
 
         historyElement.classList.add("history-element");

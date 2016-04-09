@@ -14,7 +14,8 @@ defmodule InteractiveTetris.GameChannel do
     pid = InteractiveTetris.get_game_by_room_id(socket.assigns.room_id)
     InteractiveTetris.Game.handle_input(pid, String.to_existing_atom(event_name))
 
-    Phoenix.Channel.broadcast socket, "game:movement", %{ "event" => event_name, "user" => socket.assigns.username }
+    Phoenix.Channel.broadcast socket, "game:movement",
+      %{ "event" => event_name, "user" => socket.assigns.username, "roomId" => socket.assigns.room_id }
 
     {:noreply, socket}
   end
