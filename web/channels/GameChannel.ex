@@ -22,7 +22,7 @@ defmodule InteractiveTetris.GameChannel do
   def handle_in("end", %{ "roomId" => room_id }, socket) do
     InteractiveTetris.clean_up(room_id)
 
-    Phoenix.Channel.broadcast socket, "game:end", %{}
+    Phoenix.Channel.broadcast socket, "game:end", %{ "roomId" => room_id }
 
     {:noreply, socket}
   end

@@ -28,35 +28,35 @@ defmodule InteractiveTetris do
 
   def start_game(room_id) do
     game = InteractiveTetris.GameSupervisor.start_game(room_id)
-    :ets.insert_new(:interactive_tetris_active_games, {room_id, game})
+    :ets.insert_new(:interactive_tetris_active_games, {game, room_id})
 
     game
   end
 
   def start_pusher(socket, room_id, game) do
     pusher = InteractiveTetris.StatePusherSupervisor.start_pusher(socket, game)
-    :ets.insert_new(:interactive_tetris_active_pushers, {room_id, pusher})
+    :ets.insert_new(:interactive_tetris_active_pushers, {pusher, room_id})
 
     pusher
   end
 
   def get_game_by_room_id(room_id) do
-    case :ets.lookup(:interactive_tetris_active_games, room_id) do
-      [ {_, pid} ] -> pid
-      []           -> nil
+    IO.inspect("GET GAME #{inspect :ets.match(:interactive_tetris_active_games, {:"$1", room_id})}")
+    case :ets.match(:interactive_tetris_active_games, {:"$1", room_id}) do
+      [ [ pid ] ] -> pid
+      []          -> nil
     end
   end
 
-  def get_pusher_by_room_id(room_id) do
-    case :ets.lookup(:interactive_tetris_active_pushers, room_id) do
-      [ {_, pid} ] -> pid
-      []           -> nil
-    end
+  def get_pushers_by_room_id(room_id) do
+    IO.inspect("GET PUSHERS #{inspect :ets.match(:interactive_tetris_active_pushers, {:"$1", room_id})}")
+    :ets.match(:interactive_tetris_active_pushers, {:"$1", room_id})
+    |> Enum.map(fn([ pid ]) -> pid end)
   end
 
   def clean_up(room_id) do
-    pusher = get_pusher_by_room_id(room_id)
-    InteractiveTetris.StatePusher.stop(pusher)
+    pushers = get_pushers_by_room_id(room_id)
+    for pusher <- pushers, do: InteractiveTetris.StatePusher.stop(pusher)
 
     game = get_game_by_room_id(room_id)
     state = InteractiveTetris.Game.get_state(game)
@@ -67,7 +67,7 @@ defmodule InteractiveTetris do
 
     Repo.update(changeset)
 
-    :ets.delete(:interactive_tetris_active_games, room_id)
-    :ets.delete(:interactive_tetris_active_pushers, room_id)
+    :ets.match_delete(:interactive_tetris_active_games, {:"$1", room_id})
+    :ets.match_delete(:interactive_tetris_active_pushers, {:"$1", room_id})
   end
 end

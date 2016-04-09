@@ -73,8 +73,10 @@ let onTick = (handler) => {
       }
     });
 
-    channel.on("game:end", () => {
-      window.location.pathname = window.location.pathname.replace("game", "summary");
+    channel.on("game:end", (received) => {
+      if (roomId === received.roomId) {
+        window.location.pathname = window.location.pathname.replace("game", "summary");
+      }
     });
 
     channel.on("game:movement", movement => {
