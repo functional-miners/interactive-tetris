@@ -30,6 +30,6 @@ defmodule InteractiveTetris.Rotator do
   end
 
   def rotate(_, _) do
-    {:error, "Amount must be divisible by 90"}
+    raise ArgumentError, "Amount must be divisible by 90"
   end
 end
