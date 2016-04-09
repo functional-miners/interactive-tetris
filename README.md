@@ -35,9 +35,10 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 3. `heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static.git --app APP_NAME`
 4. `heroku addons:create heroku-postgresql:hobby-dev --app APP_NAME`
 5. `mix phoenix.gen.secret`
-6. `heroku config:set SECRET_KEY_BASE=SUPER_SECRET_KEY --app APP_NAME`
+6. `heroku config:set SECRET_KEY_BASE=SUPER_SECRET_KEY_GENERATED_BY_5TH_COMMAND --app APP_NAME`
 7. `heroku config:set HEROKU_APP_NAME=$(heroku apps:info | grep -v '===' | head -n 1) --app APP_NAME`
-8. `heroku config:set HEROKU_HOST_NAME="$(heroku apps | grep -v '===' | head -n 1).herokuapp.com" --app APPN_NAME`
+8. `heroku config:set HEROKU_HOST_NAME="$(heroku apps | grep -v '===' | head -n 1).herokuapp.com" --app APP_NAME`
 9. `git push heroku master`
+  - Sometimes you have to add the new remote by `git remote add heroku HTTPS_GIT_HEROKU_URL_FROM_CREATE_COMMAND`.
 10. `heroku run mix ecto.migrate`
 11. `heroku open`
