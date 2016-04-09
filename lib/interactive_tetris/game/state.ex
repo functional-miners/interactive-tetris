@@ -15,10 +15,10 @@ defmodule InteractiveTetris.Game.State do
     # get_cells
   end
 
-  def cell_at(state, {x, y}) do
-    state.board
-    |> Enum.at(y)
-    |> Enum.at(x)
+  def cell_at(state, point) do
+    x = # ...
+    y = # ...
+    # ...
   end
 
   def still_playable?(state) do
