@@ -31,10 +31,13 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## Heroku deployment
 
 1. `heroku login`
-2. `heroku create`
-3. `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
-4. `heroku config:set HEROKU_APP_NAME=$(heroku apps:info | grep === | cut -d' ' -f2)`
-5. `git push heroku master`
-6. `heroku addons:create heroku-postgresql:hobby-dev`
-7. `heroku ps:scale web=1`
-8. `heroku open`
+2. `heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"`
+3. `heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static.git --app APP_NAME`
+4. `heroku addons:create heroku-postgresql:hobby-dev --app APP_NAME`
+5. `mix phoenix.gen.secret`
+6. `heroku config:set SECRET_KEY_BASE=SUPER_SECRET_KEY --app APP_NAME`
+7. `heroku config:set HEROKU_APP_NAME=$(heroku apps:info | grep -v '===' | head -n 1) --app APP_NAME`
+8. `heroku config:set HEROKU_HOST_NAME="$(heroku apps | grep -v '===' | head -n 1).herokuapp.com" --app APPN_NAME`
+9. `git push heroku master`
+10. `heroku run mix ecto.migrate`
+11. `heroku open`
