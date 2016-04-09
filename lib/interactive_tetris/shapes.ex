@@ -76,7 +76,7 @@ defmodule InteractiveTetris.Shapes do
   end
 
   def random do
-    by_number(:random.uniform(7))
+    by_number(:rand.uniform(7))
   end
 
   def by_number(1), do: :ell

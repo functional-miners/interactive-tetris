@@ -28,11 +28,6 @@ defmodule InteractiveTetris.Game do
   end
 
   def init(room) do
-    :random.seed(
-      :erlang.phash2([ :erlang.node() ]),
-      :erlang.monotonic_time(),
-      :erlang.unique_integer())
-
     :timer.send_interval(@game_tick, self(), :tick)
 
     {:ok, %State{
