@@ -41,7 +41,6 @@ defmodule InteractiveTetris do
   end
 
   def get_game_by_room_id(room_id) do
-    IO.inspect("GET GAME #{inspect :ets.match(:interactive_tetris_active_games, {:"$1", room_id})}")
     case :ets.match(:interactive_tetris_active_games, {:"$1", room_id}) do
       [ [ pid ] ] -> pid
       []          -> nil
@@ -49,7 +48,6 @@ defmodule InteractiveTetris do
   end
 
   def get_pushers_by_room_id(room_id) do
-    IO.inspect("GET PUSHERS #{inspect :ets.match(:interactive_tetris_active_pushers, {:"$1", room_id})}")
     :ets.match(:interactive_tetris_active_pushers, {:"$1", room_id})
     |> Enum.map(fn([ pid ]) -> pid end)
   end
