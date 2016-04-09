@@ -1,7 +1,7 @@
 defmodule InteractiveTetris.Game.State do
   defmodule Helpers do
-    def empty_line do
-      1 .. 18
+    def empty_line(length \\ 18) do
+      1..length
       |> Enum.map(fn(_) -> 0 end)
     end
   end
@@ -50,7 +50,7 @@ defmodule InteractiveTetris.Game.State do
     end
   end
   defp clear_lines([], accum, cleared) do
-    empty_lines = for _ <- cleared, do: Helpers.empty_line
+    empty_lines = for line <- cleared, do: Helpers.empty_line(length(line))
     {empty_lines ++ accum, length(cleared)}
   end
 
