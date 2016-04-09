@@ -4,17 +4,17 @@ defmodule InteractiveTetris.StatePusher do
   @render_interval 100
 
   def start_link(socket, game) do
-    {:ok, pid} = GenServer.start_link(__MODULE__, {socket, game})
-    :timer.send_interval(@render_interval, pid, :tick)
-    {:ok, pid}
+    GenServer.start_link(__MODULE__, {socket, game})
+  end
+
+  def stop(pid) do
+    GenServer.stop(pid)
   end
 
   def init(input) do
-    {:ok, input}
-  end
+    :timer.send_interval(@render_interval, self(), :tick)
 
-  def handle_call(:stop, _from, state) do
-    {:stop, :normal, nil, state}
+    {:ok, input}
   end
 
   def handle_info(:tick, {socket, game} = state) do

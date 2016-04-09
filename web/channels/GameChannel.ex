@@ -3,12 +3,16 @@ defmodule InteractiveTetris.GameChannel do
 
   def join("tetris", %{ "roomId" => room_id, "user" => username }, socket) do
     send(self, :after_join)
-    {:ok, assign(assign(socket, :room_id, room_id), :username, username)}
+    socket =
+      socket
+      |> assign(:room_id, room_id)
+      |> assign(:username, username)
+    {:ok, socket}
   end
 
   def handle_in("event", %{"event" => event_name}, socket) do
     pid = InteractiveTetris.get_game_by_room_id(socket.assigns.room_id)
-    InteractiveTetris.Game.handle_input(pid, String.to_atom(event_name))
+    InteractiveTetris.Game.handle_input(pid, String.to_existing_atom(event_name))
 
     Phoenix.Channel.broadcast socket, "game:movement", %{ "event" => event_name, "user" => socket.assigns.username }
 

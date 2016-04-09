@@ -8,9 +8,7 @@ defmodule InteractiveTetris.Game do
   @game_tick 500
 
   def start_link(room) do
-    {:ok, pid} = GenServer.start_link(__MODULE__, room)
-    :timer.send_interval(@game_tick, pid, :tick)
-    {:ok, pid}
+    GenServer.start_link(__MODULE__, room)
   end
 
   def get_state(pid) do
@@ -25,11 +23,17 @@ defmodule InteractiveTetris.Game do
     GenServer.cast(pid, {:handle_input, input})
   end
 
+  def stop(pid) do
+    GenServer.stop(pid)
+  end
+
   def init(room) do
     :random.seed(
       :erlang.phash2([ :erlang.node() ]),
       :erlang.monotonic_time(),
       :erlang.unique_integer())
+
+    :timer.send_interval(@game_tick, self(), :tick)
 
     {:ok, %State{
         board: [
@@ -67,10 +71,6 @@ defmodule InteractiveTetris.Game do
         y: 0
         }
     }
-  end
-
-  def handle_call(:stop, _from, state) do
-    {:stop, :normal, state, state}
   end
 
   def handle_call({:update_room, room}, _from, state) do

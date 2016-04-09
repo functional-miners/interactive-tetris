@@ -56,10 +56,11 @@ defmodule InteractiveTetris do
 
   def clean_up(room_id) do
     pusher = get_pusher_by_room_id(room_id)
-    GenServer.call(pusher, :stop)
+    InteractiveTetris.StatePusher.stop(pusher)
 
     game = get_game_by_room_id(room_id)
-    state = GenServer.call(game, :stop)
+    state = InteractiveTetris.Game.get_state(game)
+    InteractiveTetris.Game.stop(game)
 
     room = Repo.get(Room, room_id)
     changeset = Room.changeset(room, %{ :score => state.points })
