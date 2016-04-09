@@ -36,27 +36,13 @@ defmodule InteractiveTetris.Game.State do
   end
 
   def clear_lines(state) do
-    {board, points} = clear_lines(state.board, [], [])
-    %__MODULE__{state | board: board, points: state.points + points}
-  end
-  defp clear_lines([line|rest], accum, cleared) do
-    case clearable?(line) do
-      true  -> clear_lines(rest, accum, cleared ++ [line])
-      false -> clear_lines(rest, accum ++ [line], cleared)
-    end
-  end
-  defp clear_lines([], accum, cleared) do
-    empty_lines = for line <- cleared, do: Helpers.empty_line(length(line))
-    {empty_lines ++ accum, length(cleared)}
+    new_board = # ...
+    new_points = # ...
+    %__MODULE__{state | board: new_board, points: new_points}
   end
 
   defp collidable?(line) do
     line
     |> Enum.any?(fn(x) -> x != 0 end)
-  end
-
-  defp clearable?(line) do
-    line
-    |> Enum.all?(fn(x) -> x != 0 end)
   end
 end
