@@ -1,8 +1,5 @@
 #!/bin/sh
 
-set -e
-set -x
-
 git remote rm heroku
 
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
